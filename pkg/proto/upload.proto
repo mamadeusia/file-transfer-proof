@@ -1,0 +1,31 @@
+syntax = "proto3";
+ 
+package proto;
+ 
+option go_package = "./;uploadpb";
+
+message FileUploadRequest {
+    int32 file_index = 1;
+    bytes content = 2;//filebyte
+    string collection_merkle_root = 3;
+    repeated string proofs = 4 ; 
+}
+  
+message FileRecivedNotification {
+    int32 file_index = 1;
+}
+
+message DownloadRequest {
+    string collection_merkle_root = 1 ; 
+    int32 file_index = 2 ; 
+}
+
+message DownloadResponse {
+    bytes content = 1; 
+    repeated string proofs = 2;
+}
+
+service FileService {
+   rpc Upload(stream FileUploadRequest) returns(stream FileRecivedNotification);
+   rpc Download(DownloadRequest) returns(DownloadResponse);
+}

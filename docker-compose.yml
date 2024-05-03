@@ -1,0 +1,15 @@
+version: "3.9"
+
+services:
+  server:
+    image: server
+    build:
+      context: .
+    ports: 
+      - 9000:9000
+    volumes:
+      - ./client_files:/client_files
+    
+
+# volumes:
+#   shared_data:  
